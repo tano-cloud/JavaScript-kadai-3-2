@@ -16,42 +16,45 @@
         let delBtn = document.createElement('button');
         delBtn.classList.add('delete');
         delBtn.textContent = '削除';
-        
+
         //課題２．削除ボタンをクリックするとtoDoリストの削除とIDの振りなおし
         delBtn.addEventListener('click', e => {
-          
+
             //テキストボックスに入力した内容をtoDoObjオブジェクトに保存する
             //toDoArr配列のindex番号をID番号とする
             let elements = document.getElementsByTagName('tr');
 
-                //elementsのような配列風？オブジェクト（配列っぽいもの）を本当の配列にする（HTMLCollectionとは異なり静的なもの）
-                elements = [].slice.call(elements);
+            //elementsのような配列風？オブジェクト（配列っぽいもの）を本当の配列にする（HTMLCollectionとは異なり静的なもの）
+            elements = [].slice.call(elements);
 
-                //id='a'をtdの親ノードのtrに追加
-                e.target.parentNode.setAttribute("id", 'a')
+            //id='a'をtdの親ノードのtrに追加
+            e.target.parentNode.setAttribute("id", 'a')
 
-                //Id='a'の要素
-                let element = document.getElementById('a');
+            //Id='a'の要素
+            let element = document.getElementById('a');
 
-                //４．Id='a'の入った要素が配列の何番目かを取得
-                let index = elements.indexOf(element) - 1;
+            //４．Id='a'の入った要素が配列の何番目かを取得
+            let index = elements.indexOf(element) - 1;
 
-                //５．toDoArr配列からId='a'の情報を削除
-                toDoArr.splice(index, 1);
+            //// toDoArr からタスクを削除する
+            //５．toDoArr配列からId='a'の情報を削除
+            toDoArr.splice(index, 1);
 
-                //６．対象のtoDo削除
-                tBody.removeChild(element);
+            //６．対象のtoDo削除
+            tBody.removeChild(element);
 
-                ///////////////
+            ///////////////
 
-                //７．toDoArr配列に格納したオブジェクトにIDを新たに振りなおしてループで出力
-                for (let i = 0; i < toDoArr.length; i++) {
+            ////toDoArr の内容を HTML(tbody) に変換して表示する
+            //７．toDoArr配列に格納したオブジェクトにIDを新たに振りなおして
+            //ループでtoDoリストのidのみを新しく振りなおす（toDoリストは削除しない）
+            for (let i = 0; i < toDoArr.length; i++) {
 
-                    let obj = toDoArr[i];
-                    obj.id = i;
+                let obj = toDoArr[i];
+                obj.id = i;
 
-                    tBody.children[i].firstElementChild.textContent = obj.id;
-                }
+                tBody.children[i].firstElementChild.textContent = obj.id;
+            }
         });
         tr.appendChild(delBtn);
     }
